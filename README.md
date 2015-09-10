@@ -1,2 +1,2 @@
 # express-brute-dynamo
-DynamoDB adapter for the express-brute middleware
+AWS-SDK based DynamoDB adapter for the express-brute middleware
