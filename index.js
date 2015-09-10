@@ -1,15 +1,13 @@
 var AbstractClientStore = require('express-brute/lib/AbstractClientStore');
-var logger = require('winston').loggers.get('standard');
 var xtend = require('xtend');
 var moment = require('moment');
 
-var DynamoStore = module.exports = function (tableName, db, options) {
+var DynamoStore = module.exports = function (db, tablename, options) {
 
     AbstractClientStore.apply(this, arguments);
     this.options = xtend({}, DynamoStore.defaults, options);
-    var self = this;
-    self.db = db;
-    self.storeTable = tableName;
+    this.db = db;
+    this.storeTable = tableName;
 };
 
 DynamoStore.prototype = Object.create(AbstractClientStore.prototype);
@@ -28,7 +26,6 @@ DynamoStore.prototype.set = function (key, value, lifetime, callback) {
         TableName : this.storeTable
     }, function (err, doc) {
         if(err) {
-            logger.warn("err: "+err);
             typeof callback == 'function' && callback(err, null);
         }
         else {
@@ -54,7 +51,7 @@ DynamoStore.prototype.get = function (key, callback) {
                         Key: {
                             "storeKey": {"S": storeKey}
                         },
-                        TableName: storeTable
+                        TableName: this.storeTable
                     });
                 }
                 if (doc.Item) {
@@ -80,7 +77,6 @@ DynamoStore.prototype.reset = function (key, callback) {
 };
 
 DynamoStore.clean = function() {
-    logger.info("cleaning database of brutefailure");
     var timenow = new Date().getTime();
     this.db.scan({
         TableName: this.storeTable,
@@ -90,9 +86,7 @@ DynamoStore.clean = function() {
         FilterExpression: "expires < :timenow",
         ReturnConsumedCapacity: "TOTAL"
 }, function(err, doc) {
-        if (err) {
-            logger.warn("Scan database exprired data err: " + err);
-        }
+        if (err);
         else {
             var expireddata = doc.Items;
             for (var p in expireddata) {
@@ -100,11 +94,9 @@ DynamoStore.clean = function() {
                     Key: {
                         "storeKey": {"S": expireddata[p].storeKey.S}
                     },
-                    TableName: storeTable
+                    TableName: this.storeTable
                 }, function (err, doc) {
-                    if (err) {
-                        logger.warn("err: " + err);
-                    }
+                    if (err) ;
                 });
             }
         }
