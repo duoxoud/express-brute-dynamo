@@ -63,29 +63,17 @@ DynamoStore.prototype.get = function (key, callback) {
             }
     });
 };
-DynamoStore.prototype.reset = function (key, callback) {
-    var storeKey = this.options.prefix+key;
 
-    this.db.deleteItem({
-        Key: {
-            "storeKey": { "S": storeKey}
-        },
-        TableName : this.storeTable
-    }, function () {
-        typeof callback == 'function' && callback.apply(this, arguments);
-    });
-};
-
-DynamoStore.clean = function() {
+DynamoStore.clean = function(db, tablename) {
     var timenow = new Date().getTime();
-    this.db.scan({
-        TableName: this.storeTable,
+    db.scan({
+        TableName: tablename,
         ExpressionAttributeValues:{
             ":timenow": {"N": timenow.toString()}
         },
         FilterExpression: "expires < :timenow",
         ReturnConsumedCapacity: "TOTAL"
-}, function(err, doc) {
+    }, function(err, doc) {
         if (err);
         else {
             var expireddata = doc.Items;
@@ -102,6 +90,19 @@ DynamoStore.clean = function() {
         }
     })
 }
+
+DynamoStore.prototype.reset = function (key, callback) {
+    var storeKey = this.options.prefix+key;
+
+    this.db.deleteItem({
+        Key: {
+            "storeKey": { "S": storeKey}
+        },
+        TableName : this.storeTable
+    }, function () {
+        typeof callback == 'function' && callback.apply(this, arguments);
+    });
+};
 
 DynamoStore.defaults = {
     prefix: ''
