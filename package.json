@@ -1,6 +1,6 @@
 {
   "name": "express-brute-dynamo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "DynamoDB adapter for the express-brute middleware",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "express-brute": "~0.6.0"
   },
   "dependencies": {
-    "moment": "^4.0.0",
-    "xtend": "^2.10.6"
+    "moment": "^2.10.6",
+    "xtend": "^4.0.0"
   }
 }
