@@ -64,10 +64,10 @@ DynamoStore.prototype.get = function (key, callback) {
     });
 };
 
-DynamoStore.prototype.clean = function() {
+DynamoStore.clean = function(db, tablename) {
     var timenow = new Date().getTime();
-    this.db.scan({
-        TableName: this.storeTable,
+    db.scan({
+        TableName: tablename,
         ExpressionAttributeValues:{
             ":timenow": {"N": timenow.toString()}
         },
