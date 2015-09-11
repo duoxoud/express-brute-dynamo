@@ -7,7 +7,7 @@ var DynamoStore = module.exports = function (db, tablename, options) {
     AbstractClientStore.apply(this, arguments);
     this.options = xtend({}, DynamoStore.defaults, options);
     this.db = db;
-    this.storeTable = tableName;
+    this.storeTable = tablename;
 };
 
 DynamoStore.prototype = Object.create(AbstractClientStore.prototype);
