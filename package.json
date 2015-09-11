@@ -18,7 +18,7 @@
   "author": "Duo XU  <duo.xu@hotmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/supaggregator/express-brute-dynamo-aws/issues"
+    "url": "https://github.com/supaggregator/express-brute-dynamo/issues"
   },
-  "homepage": "https://github.com/supaggregator/express-brute-dynamo-aws#readme"
+  "homepage": "https://github.com/supaggregator/express-brute-dynamo#readme"
 }
