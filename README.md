@@ -16,7 +16,7 @@ var ExpressBrute = require('express-brute');
 var AWS = require('aws-sdk');
 AWS.config.update({ region: 'eu-west-1' });
 var db = new AWS.DynamoDB();
-var DynamoStore = require('express-brute-dynamo-AWS');
+var DynamoStore = require('express-brute-dynamo');
 var tableName = "brutefailure";
 
 store = new DynamoStore(db, tableName); // stores state in DynamoDB
