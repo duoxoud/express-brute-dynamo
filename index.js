@@ -64,7 +64,7 @@ DynamoStore.prototype.get = function (key, callback) {
     });
 };
 
-DynamoStore.clean = function() {
+DynamoStore.prototype.clean = function() {
     var timenow = new Date().getTime();
     this.db.scan({
         TableName: this.storeTable,

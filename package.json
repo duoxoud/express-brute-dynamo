@@ -1,6 +1,6 @@
 {
   "name": "express-brute-dynamo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "DynamoDB adapter for the express-brute middleware",
   "main": "index.js",
   "scripts": {
@@ -21,4 +21,11 @@
     "url": "https://github.com/supaggregator/express-brute-dynamo/issues"
   },
   "homepage": "https://github.com/supaggregator/express-brute-dynamo#readme"
+  "peerDependencies": {
+    "express-brute": "~0.6.0"
+  },
+  "dependencies": {
+    "moment": "~1.7.2",
+    "xtend": "~2.1.1"
+  }
 }
