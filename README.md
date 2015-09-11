@@ -22,7 +22,7 @@ var tableName = "brutefailure";
 store = new DynamoStore(db, tableName); // stores state in DynamoDB
 
 setInterval(function() {
-    DynamoStore.clean();
+    store.clean();
 }, 500000);// cleaning database of brutefailure
 
 var bruteforce = new ExpressBrute(store, {
