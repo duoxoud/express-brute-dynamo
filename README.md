@@ -1,5 +1,5 @@
 # express-brute-dynamo
-AWS-SDK based DynamoDB adapter for the express-brute middleware
+DynamoDB adapter for the express-brute middleware
 
 Installation
 ------------
@@ -17,13 +17,13 @@ var AWS = require('aws-sdk');
 AWS.config.update({ region: 'eu-west-1' });
 var db = new AWS.DynamoDB();
 var DynamoStore = require('express-brute-dynamo');
-var tableName = "brutefailure";
+var tableName = "BruteData";
 
 store = new DynamoStore(db, tableName); // stores state in DynamoDB
 
 setInterval(function() {
     store.clean();
-}, 500000);// cleaning database of brutefailure
+}, 500000);// cleaning database BruteData
 
 var bruteforce = new ExpressBrute(store, {
     freeRetries: 5,
