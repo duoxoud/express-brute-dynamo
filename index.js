@@ -24,7 +24,7 @@ DynamoStore.prototype.set = function (key, value, lifetime, callback) {
         },
         UpdateExpression: "SET brutedata = :brutedata, expires = :expires",
         TableName : this.storeTable
-    }, (err, doc) => {
+    }, function (err, doc) { // `function` keyword needed so this will refer to aws response -- likely a way to do this with promises.
         if (err) {
             console.error(err);
             typeof callback == 'function' && callback(err, null);
@@ -42,7 +42,7 @@ DynamoStore.prototype.get = function (key, callback) {
             "storeKey": { "S" : storeKey}
         },
         TableName : this.storeTable
-    }, (err, doc) => {
+    }, (err, doc) => { // no function keyword cause we need this to refer to instance for storeTable
             if (err) {
                 console.error(err);
                 typeof callback == 'function' && callback(err, null);
@@ -75,7 +75,7 @@ DynamoStore.prototype.clean = function() {
         },
         FilterExpression: "expires < :timenow",
         ReturnConsumedCapacity: "TOTAL"
-    }, (err, doc) => {
+    }, (err, doc) => { // no function keyword for access to this.storeTable
         if (err);
         else {
             var expireddata = doc.Items;
@@ -101,7 +101,7 @@ DynamoStore.prototype.reset = function (key, callback) {
             "storeKey": { "S": storeKey}
         },
         TableName : this.storeTable
-    }, () => {
+    }, function() { // function keyword needed for this to be aws response.
         typeof callback == 'function' && callback.apply(this, arguments);
     });
 };
