@@ -41,7 +41,7 @@ DynamoStore.prototype.get = function (key, callback) {
             "storeKey": { "S" : storeKey}
         },
         TableName : this.storeTable
-    }, function(err, doc) {
+    }, (err, doc) => {
             if (err) {
                 typeof callback == 'function' && callback(err, null);
             } else {
@@ -73,7 +73,7 @@ DynamoStore.prototype.clean = function() {
         },
         FilterExpression: "expires < :timenow",
         ReturnConsumedCapacity: "TOTAL"
-    }, function(err, doc) {
+    }, (err, doc) => {
         if (err);
         else {
             var expireddata = doc.Items;
@@ -99,7 +99,7 @@ DynamoStore.prototype.reset = function (key, callback) {
             "storeKey": { "S": storeKey}
         },
         TableName : this.storeTable
-    }, function () {
+    }, () => {
         typeof callback == 'function' && callback.apply(this, arguments);
     });
 };
