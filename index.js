@@ -24,7 +24,7 @@ DynamoStore.prototype.set = function (key, value, lifetime, callback) {
         },
         UpdateExpression: "SET brutedata = :brutedata, expires = :expires",
         TableName : this.storeTable
-    }, function (err, doc) {
+    }, (err, doc) => {
         if(err) {
             typeof callback == 'function' && callback(err, null);
         }
@@ -83,7 +83,7 @@ DynamoStore.prototype.clean = function() {
                         "storeKey": {"S": expireddata[p].storeKey.S}
                     },
                     TableName: this.storeTable
-                }, function (err, doc) {
+                }, (err, doc) => {
                     if (err) ;
                 });
             }
