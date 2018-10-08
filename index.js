@@ -24,8 +24,9 @@ DynamoStore.prototype.set = function (key, value, lifetime, callback) {
         },
         UpdateExpression: "SET brutedata = :brutedata, expires = :expires",
         TableName : this.storeTable
-    }, function (err, doc) {
-        if(err) {
+    }, function (err, doc) { // `function` keyword needed so this will refer to aws response -- likely a way to do this with promises.
+        if (err) {
+            console.error(err);
             typeof callback == 'function' && callback(err, null);
         }
         else {
@@ -41,8 +42,9 @@ DynamoStore.prototype.get = function (key, callback) {
             "storeKey": { "S" : storeKey}
         },
         TableName : this.storeTable
-    }, function(err, doc) {
+    }, (err, doc) => { // no function keyword cause we need this to refer to instance for storeTable
             if (err) {
+                console.error(err);
                 typeof callback == 'function' && callback(err, null);
             } else {
                 var brutedata;
@@ -73,7 +75,7 @@ DynamoStore.prototype.clean = function() {
         },
         FilterExpression: "expires < :timenow",
         ReturnConsumedCapacity: "TOTAL"
-    }, function(err, doc) {
+    }, (err, doc) => { // no function keyword for access to this.storeTable
         if (err);
         else {
             var expireddata = doc.Items;
@@ -83,7 +85,7 @@ DynamoStore.prototype.clean = function() {
                         "storeKey": {"S": expireddata[p].storeKey.S}
                     },
                     TableName: this.storeTable
-                }, function (err, doc) {
+                }, (err, doc) => {
                     if (err) ;
                 });
             }
@@ -99,7 +101,7 @@ DynamoStore.prototype.reset = function (key, callback) {
             "storeKey": { "S": storeKey}
         },
         TableName : this.storeTable
-    }, function () {
+    }, function() { // function keyword needed for this to be aws response.
         typeof callback == 'function' && callback.apply(this, arguments);
     });
 };

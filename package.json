@@ -10,7 +10,6 @@
     "type": "git",
     "url": "git+https://github.com/supaggregator/express-brute-dynamo.git"
   },
-
   "keywords": [
     "brute-force",
     "dynamoDB"
